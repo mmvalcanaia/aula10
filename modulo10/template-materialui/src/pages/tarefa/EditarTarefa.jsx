@@ -67,7 +67,9 @@ const EditarTarefa = ({handleCloseEditar, idTarefaSelecionada, tarefas, tarefa, 
     handleCloseEditar();
   };
 
+  const formRef = React.useRef();
   return(
+    <form ref={formRef}>
     <Grid container spacing={2}>
       <Card sx={style}>
         <CardHeader
@@ -80,20 +82,20 @@ const EditarTarefa = ({handleCloseEditar, idTarefaSelecionada, tarefas, tarefa, 
         }}>
           <Grid item xs={12}>
             <FormControl fullWidth>
-              <Input id="tarefa_titulo" aria-describedby="tarefa_titulo_helper_text" value={tituloTarefa} onChange={e => { setTituloTarefa(e.target.value) }} />
+              <Input required={true} id="tarefa_titulo" aria-describedby="tarefa_titulo_helper_text" value={tituloTarefa} onChange={e => { setTituloTarefa(e.target.value) }} />
               <FormHelperText id="tarefa_titulo_helper_text">Título da Tarefa.</FormHelperText>
             </FormControl>
           </Grid>
           <Grid item xs={12}>  
             <FormControl fullWidth>
-              <Input id="tarefa_descricao" aria-describedby="tarefa_descricao_helper_text" value={descricaoTarefa} onChange={e => { setDescricaoTarefa(e.target.value) }} />
+              <Input required={true} id="tarefa_descricao" aria-describedby="tarefa_descricao_helper_text" value={descricaoTarefa} onChange={e => { setDescricaoTarefa(e.target.value) }} />
               <FormHelperText id="tarefa_descricao_helper_text">Descrição da Tarefa.</FormHelperText>
             </FormControl>
           </Grid>
           <Grid container spacing={2} mt={1}>
             <Grid item xs={3}>  
               <FormControl>
-                <Input id="tarefa_inicio" type="date" aria-describedby="tarefa_inicio_helper_text" value={inicioTarefa} onChange={e => { setInicioTarefa(e.target.value) }}
+                <Input required={true} id="tarefa_inicio" type="date" aria-describedby="tarefa_inicio_helper_text" value={inicioTarefa} onChange={e => { setInicioTarefa(e.target.value) }}
                   sx={{
                     color:'rgba(0, 0, 0, 0.6)',
                     fontWeight: 400,
@@ -157,7 +159,7 @@ const EditarTarefa = ({handleCloseEditar, idTarefaSelecionada, tarefas, tarefa, 
             </Grid>
             <Grid container spacing={2} pl={2} mt={2}>
               <Grid item xs={1}>
-                <Button size="small" variant="contained" onClick={handleEditar}>Salvar</Button>
+                <Button size="small" variant="contained" onClick={() => {if (formRef.current.reportValidity()) handleEditar()}}>Salvar</Button>
               </Grid>  
               <Grid item xs={1}>  
                 <Button size="small" variant="outlined" onClick={handleCloseEditar}>Cancelar</Button>  
@@ -167,6 +169,7 @@ const EditarTarefa = ({handleCloseEditar, idTarefaSelecionada, tarefas, tarefa, 
         </CardContent>
       </Card>
     </Grid>
+    </form>
   );
 }
 
